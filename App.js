@@ -1,24 +1,20 @@
-import "react-native-gesture-handler";
+import React from 'react';
+import { StyleSheet, Text } from 'react-native';
+import { ApolloProvider } from '@apollo/client';
+import { client } from './apollo';
+import { RootComponent } from './src/screens/RootComponent';
 
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-
-import { useLoadedAssets } from "./hooks/useLoadedAssets";
-import Navigation from "./navigation";
-import { useColorScheme } from "react-native";
+const styles = StyleSheet.create({
+  root: {
+    width: "100%",
+    height: "100%",
+  }
+})
 
 export default function App() {
-  const isLoadingComplete = useLoadedAssets();
-  const colorScheme = useColorScheme();
-
-  if (!isLoadingComplete) {
-    return null;
-  } else {
-    return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
-    );
-  }
+  return (
+    <ApolloProvider client={client} style={styles.root}>
+      <RootComponent />
+    </ApolloProvider>
+  );
 }
